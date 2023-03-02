@@ -20,7 +20,7 @@ CREATE TABLE user
     first_name VARCHAR(15) NOT NULL,
     last_name VARCHAR(15),
     email VARCHAR(30),
-    username VARCHAR(20),
+    username VARCHAR(20) UNIQUE,
     password VARCHAR(20)
 
 );
