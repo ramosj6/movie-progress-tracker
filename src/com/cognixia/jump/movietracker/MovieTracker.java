@@ -5,7 +5,9 @@ import java.util.Scanner;
 public class MovieTracker {
 	public static void main(String[] args) {
 		
+		System.out.println("Hello");
 		login();
+		
 		
 	}
 	public static void login() {
