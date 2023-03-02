@@ -1,6 +1,16 @@
 package com.cognixia.jump.movietracker;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
+
+import com.cognixia.jump.connection.ConnectionManager;
+import com.cognixia.jump.dao.Movie;
+import com.cognixia.jump.dao.MovieDao;
+import com.cognixia.jump.dao.MovieDaoSql;
 
 public class MovieTracker {
 	public static void main(String[] args) {
@@ -30,6 +40,13 @@ public class MovieTracker {
 		return true;
 	}
 	public static void menu() {
+		MovieDao movieDao = new MovieDaoSql();
+		
+		try {
+			movieDao.setConnection();
+			
+			List<Movie> moviesList = movieDao.getAllMovies();
+			
 		String option;
 		Scanner sc = new Scanner(System.in);
 		
@@ -49,15 +66,32 @@ public class MovieTracker {
 		if(option.equals("1")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: All Movies");
+			
+			System.out.println("Here is a list of all the movies: ");
+			System.out.println("-------------------------------------------------------------------------------------------");
+			for(Movie m : moviesList) {
+				System.out.println(m.getId() + ". " + m.getTitle());
+			}
 		}
 		else if(option.equals("2")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Movie Genre");
+			for(Movie m : moviesList) {
+				System.out.println(m.getGenre());
+			}
 		}
 		else if(option.equals("3")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Film Studios");
+			
+			for(Movie m : moviesList) {
+				System.out.println(m.getFilmStudios());
+			}
 		}
 		sc.close();
+	} catch (ClassNotFoundException | IOException | SQLException e) {
+		System.out.println("Could not find any movies.");
+		e.printStackTrace();
 	}
+	} 
 }
