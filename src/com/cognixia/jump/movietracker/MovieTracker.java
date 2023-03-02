@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -42,7 +43,6 @@ public class MovieTracker {
 			System.out.print("Password: ");
 			password = sc.next();
 			System.out.println();
-			System.out.println("Thanks for entering you username " + username + " we will verify if that account exists.");
 			System.out.println("-------------------------------------------------------------------------------------------");
 			
 			Optional<User> userToFind = userDao.validateUser(username, password);
@@ -136,24 +136,33 @@ public class MovieTracker {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Add Movie");
 			
-			String title, genre, film; int id, length;
+			String title, genre, film; 
+			int id = 0, length = 0;
 			
 			Scanner movieScanner = new Scanner(System.in);
-			
-			System.out.println("Enter movie id: ");
-				id = movieScanner.nextInt();
-			System.out.println("Enter movie title: ");
-				title = movieScanner.next();
-			System.out.println("Enter movie genre: ");
-				genre = movieScanner.next();
-			System.out.println("Enter movie length: ");
-				length = movieScanner.nextInt();
-			System.out.println("Enter movie film studio: ");
-				film = movieScanner.next();
-			
+			try {
+				System.out.println("Enter movie id: ");
+					id = movieScanner.nextInt();
+					movieScanner.nextLine();
+				System.out.println("Enter movie title: ");
+					title = movieScanner.nextLine();
+				System.out.println("Enter movie genre: ");
+					genre = movieScanner.nextLine();
+				System.out.println("Enter movie length: ");
+					length = movieScanner.nextInt();
+					movieScanner.nextLine();
+				System.out.println("Enter movie film studio: ");
+					film = movieScanner.nextLine();
+					
 			Movie movie = new Movie(id, title, genre, length, film);
 			
 			System.out.println("Movie Added: " + movie.toString());
+			
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter a valid integer.");
+			}catch (NumberFormatException e) {
+				System.out.println("Invalid input, please enter a valid integer.");
+			}
 		}
 		sc.close();
 	} catch (ClassNotFoundException | IOException | SQLException e) {
