@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -76,16 +77,37 @@ public class MovieTracker {
 		else if(option.equals("2")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Movie Genre");
+			List<String> uniqueGenre = new ArrayList<>();
+			
 			for(Movie m : moviesList) {
-				System.out.println(m.getGenre());
+				// This is to find the unique Genre's 
+				if(m.getGenre() instanceof String) {
+					String genreStr = (String) m.getGenre();
+					if(!uniqueGenre.contains(genreStr)) {
+						uniqueGenre.add(genreStr);
+					}
+				}
+			}	
+			for(String str : uniqueGenre) {
+				System.out.println(str); // Printing out unique genres
 			}
 		}
 		else if(option.equals("3")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Film Studios");
+			List<String> uniqueFilms = new ArrayList<>();
 			
 			for(Movie m : moviesList) {
-				System.out.println(m.getFilmStudios());
+				// This is to find the unique Film Studios
+				if(m.getFilmStudios() instanceof String) {
+					String str = (String) m.getFilmStudios();
+					if(!uniqueFilms.contains(str)) {
+					uniqueFilms.add(str);
+					}
+				}
+			}
+			for(String str : uniqueFilms) {
+				System.out.println(str); // Prints out unique film studios
 			}
 		}
 		sc.close();
