@@ -36,8 +36,8 @@ public class MovieTracker {
 		System.out.println("\nWelcome to your movies.\n");
 		System.out.println("Select a category by entering the number of the category you want to select:");
 		System.out.println("1. All Movies");
-		System.out.println("2. Film Studios");
-		System.out.println("3. Movie Information");
+		System.out.println("2. Movie Genre");
+		System.out.println("3. Film Studios");
 		System.out.print("\nUser input: ");
 		option = sc.next();
 		
@@ -52,11 +52,11 @@ public class MovieTracker {
 		}
 		else if(option.equals("2")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
-			System.out.println("\nYou selected: Film Studios");
+			System.out.println("\nYou selected: Movie Genre");
 		}
 		else if(option.equals("3")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
-			System.out.println("\nYou selected: Movie Information");
+			System.out.println("\nYou selected: Film Studios");
 		}
 		sc.close();
 	}
