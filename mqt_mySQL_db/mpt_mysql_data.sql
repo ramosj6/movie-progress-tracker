@@ -23,23 +23,31 @@ insert into movies values(null, 'Minions', 'Family/Comedy', 91, 'Universal Pictu
 insert into movies values(null, 'The Town', 'Crime/Thriller', 124, 'Warner Bros');
 insert into movies values(null, 'Ralph Breaks the Internet', 'Family/Comedy', 114, 'Disney');
 insert into movies values(null, 'Pulp Fiction', 'Crime/Drama', 154, 'Miramax Films');
+insert into movies values(null, 'Avatar: The Way of Water', 'Sci-fi/Action', 192, '20th Century Studios');
+insert into movies values(null, 'Mad Max: Fury Road', 'Crime/Drama', 154, 'Warner Bros');
+insert into movies values(null, 'Spider-Man: Into the Spider Verse', 'Family/Action', 116, 'Sony Pictures');
+insert into movies values(null, 'Get Out', 'Horror/Thriller', 104, 'Universal Pictures');
+insert into movies values(null, 'Black Panther', 'Action/Adventure', 135, 'Disney');
+insert into movies values(null, 'The Social Network', 'Drama', 120, 'Columbia Pictures');
+insert into movies values(null, 'Inception', 'Action/Sci-fi', 148, 'Warner Bros');
+insert into movies values(null, 'Avengers: Infinity War', 'Action/Sci-fi', 149, 'Disney');
+select * from movies;
+
 
 
 
 
 --------------------------------------------------------
 -- insert user_movie
-insert into user_movie values(1, 1);
-insert into user_movie values(1, 3);
-insert into user_movie values(1, 5);
-insert into user_movie values(1, 8);
-insert into user_movie values(2, 1);
-insert into user_movie values(2, 2);
-insert into user_movie values(2, 4);
-insert into user_movie values(3, 2);
-insert into user_movie values(3, 3);
-insert into user_movie values(3, 8);
+insert into user_movie values(1, 1, null);
+insert into user_movie values(1, 3, null);
+insert into user_movie values(1, 5, null);
+insert into user_movie values(1, 8, null);
+insert into user_movie values(2, 1, null);
+insert into user_movie values(2, 2, null);
+insert into user_movie values(2, 4, null);
+insert into user_movie values(3, 2, null);
+insert into user_movie values(3, 3, null);
+insert into user_movie values(3, 8, null);
 select * from user_movie;
-
-select * from user;
 
