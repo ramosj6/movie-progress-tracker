@@ -98,13 +98,40 @@ public class MovieDaoSql implements MovieDao{
 
 	@Override
 	public boolean createMovie(Movie movie) {
+		try( PreparedStatement pstmt = conn.prepareStatement("insert into movies(title, genre, length, film_studios)"
+				+ "values (?, ?, ?, ? )");){
+			pstmt.setString(1, movie.getTitle());
+			pstmt.setString(2, movie.getGenre());
+			pstmt.setInt(3, movie.getLengthMin());
+			pstmt.setString(4, movie.getFilmStudios());
+			
+			int count = pstmt.executeUpdate();
+			if(count > 0) {
+				//Success if its inserted into the table
+				return true;
+			}
+			
+		} catch(SQLException e) {
+			// Uncomment if problems occur
+//			e.printStackTrace();
+			return false;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteMovie(int id) {
-		return false;
-	}
+		try( PreparedStatement pstmt = conn.prepareStatement("delete from movies where movie_id = ?");){
+			pstmt.setInt(1, id);
+			int count = pstmt.executeUpdate();
+			if(count > 0) {
+				// if its not deleted
+				return true;
+			}
+		} catch(SQLException e) {
+			return false;
+		}
+		return false;	}
 
 	@Override
 	public boolean updateMovie(Movie movie) {
@@ -112,9 +139,9 @@ public class MovieDaoSql implements MovieDao{
 				+ "where dept_id = ?");){
 			pstmt.setString(1, movie.getTitle());
 			pstmt.setString(2, movie.getGenre());
-			pstmt.setInt(2, movie.getLengthMin());
-			pstmt.setString(2, movie.getFilmStudios());
-			pstmt.setInt(3, movie.getId());
+			pstmt.setInt(3, movie.getLengthMin());
+			pstmt.setString(4, movie.getFilmStudios());
+			pstmt.setInt(5, movie.getId());
 			
 			int count = pstmt.executeUpdate();
 			if(count > 0) {
