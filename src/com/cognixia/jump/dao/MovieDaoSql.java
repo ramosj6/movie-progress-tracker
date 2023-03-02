@@ -3,6 +3,7 @@ package com.cognixia.jump.dao;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +28,7 @@ public class MovieDaoSql implements MovieDao{
 	public List<Movie> getAllMovies() {
 		List<Movie> movies = new ArrayList<>();
 		try(Statement stmt = conn.createStatement(); 
-			ResultSet rs = stmt.executeQuery("Select * from department");){
+			ResultSet rs = stmt.executeQuery("Select * from movies");){
 			while(rs.next()) {
 				int id = rs.getInt("movie_id");
 				String title = rs.getString("title");
@@ -54,24 +55,75 @@ public class MovieDaoSql implements MovieDao{
 	@Override
 	public Optional<Movie> getMovieById(int id) {
 		
-		return Optional.empty();
+		try( PreparedStatement pstmt = conn.prepareStatement("select * from movies where dept_id = ?") ) {
+			
+			pstmt.setInt(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			// rs.next() will return false if nothing found
+			// if you enter the if block, that department with that id was found
+			if( rs.next() ) {
+				
+				int movieId = rs.getInt("movie_id");
+				String title = rs.getString("title");
+				String genre = rs.getString("genre");
+				int length = rs.getInt("length");
+				String filmStudios = rs.getString("film_studios");
+				
+				rs.close();
+				
+				// constructing the movie object
+				Movie movie = new Movie(movieId, title, genre, length, filmStudios);
+				
+
+				// placing it in the optional
+				Optional<Movie> movieFound = Optional.of(movie);
+				
+				// return the optional
+				return movieFound;
+				
+			}
+			else {
+				rs.close();
+				// if you did not find the department with that id, return an empty optional
+				return Optional.empty();
+			}
+			
+		} catch(SQLException e) {
+			// just in case an exception occurs, return nothing in the optional
+			return Optional.empty();
+		}	
 	}
 
 	@Override
-	public boolean createMovie(Movie dept) {
-		// TODO Auto-generated method stub
+	public boolean createMovie(Movie movie) {
 		return false;
 	}
 
 	@Override
 	public boolean deleteMovie(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean updateMovie(Movie dept) {
-		// TODO Auto-generated method stub
+	public boolean updateMovie(Movie movie) {
+		try(PreparedStatement pstmt = conn.prepareStatement("update department set title = ?, genre = ?, length = ?, film_studios = ? " 
+				+ "where dept_id = ?");){
+			pstmt.setString(1, movie.getTitle());
+			pstmt.setString(2, movie.getGenre());
+			pstmt.setInt(2, movie.getLengthMin());
+			pstmt.setString(2, movie.getFilmStudios());
+			pstmt.setInt(3, movie.getId());
+			
+			int count = pstmt.executeUpdate();
+			if(count > 0) {
+				return true;
+			}
+
+		} catch(SQLException e) {
+			return false;
+		}
 		return false;
 	}
 
