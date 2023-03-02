@@ -1,0 +1,20 @@
+#Lines (like this one) that begin with # are comments; all other lines are rules
+
+#ignore all files in the bin/ and /out directories (takes care of .class files for some
+IDEs)
+bin/
+out/
+resources/
+#ignore automatically generated backup files (created by some editors)
+*.bak
+#ignore Enterprise Architect and Microsoft temporary files
+*.ldb
+~*
+
+#ignore all files that begin with a dot (this includes .classpath, .project, .iml, etc)
+
+.*
+
+# Any files you do want not to ignore must be specified starting with !
+# For example, if you didn't want to ignore .classpath, you'd uncomment the following rule:
+# !.classpath
