@@ -15,9 +15,9 @@ public interface MovieDao {
 	
 	public Optional<Movie> getMovieById(int id);
 		
-	public boolean createMovie(Movie dept);
+	public boolean createMovie(Movie movie);
 		
 	public boolean deleteMovie(int id);
 
-	public boolean updateMovie(Movie dept);
+	public boolean updateMovie(Movie movie);
 }
