@@ -26,6 +26,7 @@ public class MovieTracker {
 		
 		if(login()) { 
 			System.out.println("Login Successful");
+			System.out.println("Hello");
 			menu();
 		}
 		else {
