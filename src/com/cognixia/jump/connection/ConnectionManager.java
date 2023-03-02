@@ -18,7 +18,7 @@ public class ConnectionManager {
 		Properties props = new Properties();
 		
 		// load in the data from the file using a file stream
-		props.load(new FileInputStream("movie-progress-tracker/resources/config.properties"));
+		props.load(new FileInputStream("resources/config.properties"));
 		
 		// save the values as variables from the properties file
 		String url = props.getProperty("url");
