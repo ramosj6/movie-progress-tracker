@@ -56,10 +56,11 @@ public class MovieTracker {
 		System.out.println("1. All Movies");
 		System.out.println("2. Movie Genre");
 		System.out.println("3. Film Studios");
+		System.out.println("4. Add Movie");
 		System.out.print("\nUser input: ");
 		option = sc.next();
 		
-		while(!option.equals("1") && !option.equals("2") && !option.equals("3")) {
+		while(!option.equals("1") && !option.equals("2") && !option.equals("3") && !option.equals("4")) {
 			System.out.println("Invalid input, try again: ");
 			System.out.print("\nUser input: ");
 			option = sc.next();
@@ -109,6 +110,29 @@ public class MovieTracker {
 			for(String str : uniqueFilms) {
 				System.out.println(str); // Prints out unique film studios
 			}
+		}
+		else if(option.equals("4")) {
+			System.out.println("-------------------------------------------------------------------------------------------");
+			System.out.println("\nYou selected: Add Movie");
+			
+			String title, genre, film; int id, length;
+			
+			Scanner movieScanner = new Scanner(System.in);
+			
+			System.out.println("Enter movie id: ");
+				id = movieScanner.nextInt();
+			System.out.println("Enter movie title: ");
+				title = movieScanner.next();
+			System.out.println("Enter movie genre: ");
+				genre = movieScanner.next();
+			System.out.println("Enter movie length: ");
+				length = movieScanner.nextInt();
+			System.out.println("Enter movie film studio: ");
+				film = movieScanner.next();
+			
+			Movie movie = new Movie(id, title, genre, length, film);
+			
+			System.out.println("Movie Added: " + movie.toString());
 		}
 		sc.close();
 	} catch (ClassNotFoundException | IOException | SQLException e) {
