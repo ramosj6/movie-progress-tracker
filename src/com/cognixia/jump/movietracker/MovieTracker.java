@@ -7,18 +7,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.dao.Movie;
 import com.cognixia.jump.dao.MovieDao;
 import com.cognixia.jump.dao.MovieDaoSql;
+import com.cognixia.jump.dao.User;
+import com.cognixia.jump.dao.UserDao;
+import com.cognixia.jump.dao.UserDaoSql;
 
 public class MovieTracker {
 	public static void main(String[] args) {
 		
 		if(login()) { 
-			System.out.println("Login Successful");
 			menu();
 		}
 		else {
@@ -26,36 +29,37 @@ public class MovieTracker {
 		}
 	}
 	public static boolean login() {
-		String username, password;
+		UserDao userDao = new UserDaoSql();
 		
-		System.out.println("Login\n");
-		Scanner sc = new Scanner(System.in);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		System.out.print("Username: ");
-		username = sc.next();
-		System.out.println();
-		System.out.print("Password: ");
-		password = sc.next();
-		System.out.println();
-		System.out.println("Thanks for entering you username " + username + " we will verify if that account exists.");
-		System.out.println("-------------------------------------------------------------------------------------------");
-
-		return true;
+		try {
+			userDao.setConnection();
+			String username, password;
+			
+			System.out.println("Login\n");
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Username: ");
+			username = sc.next();
+			System.out.println();
+			System.out.print("Password: ");
+			password = sc.next();
+			System.out.println();
+			System.out.println("-------------------------------------------------------------------------------------------");
+			
+			Optional<User> userToFind = userDao.validateUser(username, password);
+			
+			// check if the optional has something
+			if(userToFind.isPresent()) {
+				User found = userToFind.get();
+				System.out.println("User login Success! Welcome " + found.getFirstName() + "!");
+				return true;
+			} else {
+				System.out.println("Couldnt't find that user. Please try again.");
+				return false;
+			}
+		} catch (ClassNotFoundException | IOException | SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	public static void menu() {
 		MovieDao movieDao = new MovieDaoSql();

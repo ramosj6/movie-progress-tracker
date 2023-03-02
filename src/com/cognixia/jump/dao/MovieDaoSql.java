@@ -21,7 +21,6 @@ public class MovieDaoSql implements MovieDao{
 	@Override
 	public void setConnection() throws FileNotFoundException, ClassNotFoundException, IOException, SQLException {
 		conn = ConnectionManager.getConnection();
-
 	}
 
 	@Override
