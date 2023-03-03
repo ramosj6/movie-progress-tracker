@@ -1,22 +1,20 @@
 package com.cognixia.jump.movietracker;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-import com.cognixia.jump.connection.ConnectionManager;
 import com.cognixia.jump.dao.Movie;
 import com.cognixia.jump.dao.MovieDao;
 import com.cognixia.jump.dao.MovieDaoSql;
 import com.cognixia.jump.dao.User;
 import com.cognixia.jump.dao.UserDao;
 import com.cognixia.jump.dao.UserDaoSql;
+import com.cognixia.jump.dao.UserMovieProgression;
 
 public class MovieTracker {
 	public static void main(String[] args) {
@@ -25,18 +23,18 @@ public class MovieTracker {
 			menu();
 		}
 		else {
-			System.out.println("Login Failed, try again.");
+			System.out.println("Couldnt't find that user. Please try again.");
 		}
 	}
+	
 	public static boolean login() {
 		UserDao userDao = new UserDaoSql();
 		
-		try {
+		try(Scanner sc = new Scanner(System.in)) {
 			userDao.setConnection();
 			String username, password;
 			
 			System.out.println("Login\n");
-			Scanner sc = new Scanner(System.in);
 			System.out.print("Username: ");
 			username = sc.next();
 			System.out.println();
@@ -51,9 +49,10 @@ public class MovieTracker {
 			if(userToFind.isPresent()) {
 				User found = userToFind.get();
 				System.out.println("User login Success! Welcome " + found.getFirstName() + "!");
+				List<UserMovieProgression> trackedList = userDao.getListOfMoviesTracked(found);
+				System.out.println("Here are the list of movies that you're tracking: \n" + trackedList);
 				return true;
 			} else {
-				System.out.println("Couldnt't find that user. Please try again.");
 				return false;
 			}
 		} catch (ClassNotFoundException | IOException | SQLException e) {
@@ -61,6 +60,8 @@ public class MovieTracker {
 			return false;
 		}
 	}
+	
+	
 	public static void menu() {
 		MovieDao movieDao = new MovieDaoSql();
 		
@@ -78,7 +79,7 @@ public class MovieTracker {
 		System.out.println("2. Movie Genre");
 		System.out.println("3. Film Studios");
 		System.out.println("4. Add Movie");
-		System.out.print("\nUser input: ");
+		System.out.println("\nUser input: ");
 		option = sc.next();
 		
 		while(!option.equals("1") && !option.equals("2") && !option.equals("3") && !option.equals("4")) {
