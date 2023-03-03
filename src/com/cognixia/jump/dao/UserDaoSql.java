@@ -63,8 +63,6 @@ public class UserDaoSql implements UserDao{
 	}
 	
 	// This method will add a movie into the movie_user table where the progression is tracked
-	
-	/*
 	public boolean addMovieForProgress(User user, int movie_id) {
 		try( PreparedStatement pstmt = conn.prepareStatement("insert into user_movie(user_id, movie_id, status)"
 				+ " values(?, ?, ?)")){
@@ -77,25 +75,17 @@ public class UserDaoSql implements UserDao{
 				return true;
 			}
 
+		} catch (SQLIntegrityConstraintViolationException e) {
+	        System.out.println("Error: Duplicate entry detected. This movie is already being tracked.");
+		    return false; 
 		} catch(SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 		return false;
 	}
-	*/
-	public void addMovieForProgress(int userId, int movieId, int progress) throws SQLException {
-	    try {
-	        String query = "INSERT INTO user_movie (user_id, movie_id, progress) VALUES (?, ?, ?)";
-	        PreparedStatement statement = conn.prepareStatement(query);
-	        statement.setInt(1, userId);
-	        statement.setInt(2, movieId);
-	        statement.setInt(3, progress);
-	        statement.executeUpdate();
-	    } catch (SQLIntegrityConstraintViolationException e) {
-	        System.out.println("Error: Duplicate entry detected. This movie is already being tracked.");
-	    }
-	}
+	
+	
 	@Override
 	public boolean updateMovieProgress(User user, int movie_id, String newStatus) {
 		try(PreparedStatement pstmt = conn.prepareStatement("update user_movie set status = ? where user_id = ? and movie_id = ?");){
@@ -110,7 +100,7 @@ public class UserDaoSql implements UserDao{
 
 		} catch(SQLException e) {
 			return false;
-		}
+		} 
 		return false;
 	}	
 	
@@ -138,13 +128,5 @@ public class UserDaoSql implements UserDao{
 //			e.printStackTrace();
 		}
 		return moviesTracked;
-	}
-
-	@Override
-	public boolean addMovieForProgress(User user, int movie_id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
+	}	
 }
