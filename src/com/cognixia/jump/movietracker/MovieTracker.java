@@ -144,6 +144,19 @@ public class MovieTracker {
 				System.out.println("\nYou selected: Film Studios");
 				List<String> uniqueFilms = new ArrayList<>();
 				
+				for(Movie m : moviesList) {
+					// This is to find the unique Genre's 
+					if(m.getGenre() instanceof String) {
+						String filmStr = (String) m.getFilmStudios();
+						if(!uniqueFilms.contains(filmStr)) {
+							uniqueFilms.add(filmStr);
+						}
+					}
+				}	
+				for(String str : uniqueFilms) {
+				System.out.println(str); // Printing out unique genres
+				}
+				
 			}
 			else if(option.equals("5")) {
 				System.out.println("-------------------------------------------------------------------------------------------");
