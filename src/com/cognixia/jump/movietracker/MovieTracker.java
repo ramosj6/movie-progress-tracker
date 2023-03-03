@@ -19,6 +19,8 @@ import com.cognixia.jump.dao.UserMovieProgression;
 public class MovieTracker {
 	private static List<UserMovieProgression> trackedList;
 	
+	// keeps track of the boolean 
+	
 	private static MovieDao movieDao;
 	
 	// Keeps track of the user for the application
@@ -117,40 +119,9 @@ public class MovieTracker {
 				System.out.println("Updated list: \n");
 				getTrackedList();
 				movieSelector.close();
-//				System.out.println("-------------------------------------------------------------------------------------------");
-//				System.out.println("\nYou selected: Movie Genre");
-//				List<String> uniqueGenre = new ArrayList<>();
-//				
-//				for(Movie m : moviesList) {
-//					// This is to find the unique Genre's 
-//					if(m.getGenre() instanceof String) {
-//						String genreStr = (String) m.getGenre();
-//						if(!uniqueGenre.contains(genreStr)) {
-//							uniqueGenre.add(genreStr);
-//						}
-//					}
-//				}	
-//				for(String str : uniqueGenre) {
-//					System.out.println(str); // Printing out unique genres
-//				}
 			}
 			else if(option.equals("3")) {
-				System.out.println("-------------------------------------------------------------------------------------------");
-				System.out.println("\nYou selected: Film Studios");
-				List<String> uniqueFilms = new ArrayList<>();
 				
-				for(Movie m : moviesList) {
-					// This is to find the unique Film Studios
-					if(m.getFilmStudios() instanceof String) {
-						String str = (String) m.getFilmStudios();
-						if(!uniqueFilms.contains(str)) {
-						uniqueFilms.add(str);
-						}
-					}
-				}
-				for(String str : uniqueFilms) {
-					System.out.println(str); // Prints out unique film studios
-				}
 			}
 			sc.close();
 		} catch (ClassNotFoundException | IOException | SQLException e) {
