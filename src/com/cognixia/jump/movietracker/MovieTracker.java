@@ -92,12 +92,14 @@ public class MovieTracker {
 			getTrackedList();
 		
 			System.out.println();
+			System.out.println("===========================================================================================");
 			System.out.println("Please select an option :");
 			System.out.println("1) Add Movie To Track");
 			System.out.println("2) Update Movie Progress");
 			System.out.println("3) Genre");
 			System.out.println("4) Film Studios");
 			System.out.println("5) Exit/Log out");
+			System.out.println("===========================================================================================");
 
 			System.out.print("\nUser input: ");
 			option = sc.next();
