@@ -19,7 +19,7 @@ import com.cognixia.jump.dao.UserDao;
 import com.cognixia.jump.dao.UserDaoSql;
 
 public class MovieTracker {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MovieNotFoundException {
 		
 		if(login()) { 
 			menu();
@@ -61,7 +61,7 @@ public class MovieTracker {
 			return false;
 		}
 	}
-	public static void menu() {
+	public static void menu() throws MovieNotFoundException {
 		MovieDao movieDao = new MovieDaoSql();
 		
 		try {
@@ -77,7 +77,7 @@ public class MovieTracker {
 		System.out.println("1. All Movies");
 		System.out.println("2. Movie Genre");
 		System.out.println("3. Film Studios");
-		System.out.println("4. Add Movie");
+		// System.out.println("4. Add Movie");
 		System.out.print("\nUser input: ");
 		option = sc.next();
 		
@@ -87,6 +87,9 @@ public class MovieTracker {
 			option = sc.next();
 		}
 		if(option.equals("1")) {
+			Scanner movieSelector = new Scanner(System.in);
+			int selector, maxId = 0;
+			
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: All Movies");
 			
@@ -94,6 +97,26 @@ public class MovieTracker {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			for(Movie m : moviesList) {
 				System.out.println(m.getId() + ". " + m.getTitle());
+				maxId++;
+			}
+			System.out.println("-------------------------------------------------------------------------------------------");
+			System.out.print("\nSelect a movie by id: ");
+			try {
+				selector = movieSelector.nextInt();
+				while(selector < 1 || selector > maxId) {
+					
+					System.out.print("\nSelect a movie by id: ");
+					selector = movieSelector.nextInt();
+					
+					throw new MovieNotFoundException("Movie not found, try again." );
+				}
+					System.out.println("You selected: " + moviesList.get(selector-1).getTitle());
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input. Please enter a valid integer.");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input, please enter a valid integer.");
+			} catch(IndexOutOfBoundsException e) {
+				System.out.println("Please enter a number between 1 and " + maxId);
 			}
 		}
 		else if(option.equals("2")) {
@@ -132,6 +155,7 @@ public class MovieTracker {
 				System.out.println(str); // Prints out unique film studios
 			}
 		}
+		/*
 		else if(option.equals("4")) {
 			System.out.println("-------------------------------------------------------------------------------------------");
 			System.out.println("\nYou selected: Add Movie");
@@ -164,6 +188,7 @@ public class MovieTracker {
 				System.out.println("Invalid input, please enter a valid integer.");
 			}
 		}
+		*/
 		sc.close();
 	} catch (ClassNotFoundException | IOException | SQLException e) {
 		System.out.println("Could not find any movies.");
