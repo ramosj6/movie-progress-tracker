@@ -39,15 +39,15 @@ select * from movies;
 
 --------------------------------------------------------
 -- insert user_movie
-insert into user_movie values(1, 1, null);
-insert into user_movie values(1, 3, null);
-insert into user_movie values(1, 5, null);
-insert into user_movie values(1, 8, null);
-insert into user_movie values(2, 1, null);
-insert into user_movie values(2, 2, null);
-insert into user_movie values(2, 4, null);
-insert into user_movie values(3, 2, null);
-insert into user_movie values(3, 3, null);
-insert into user_movie values(3, 8, null);
+insert into user_movie values(1, 1, 'NC');
+insert into user_movie values(1, 3, 'NC');
+insert into user_movie values(1, 5, 'NC');
+insert into user_movie values(1, 8, 'NC');
+insert into user_movie values(2, 1, 'NC');
+insert into user_movie values(2, 2, 'NC');
+insert into user_movie values(2, 4, 'NC');
+insert into user_movie values(3, 2, 'NC');
+insert into user_movie values(3, 3, 'NC');
+insert into user_movie values(3, 8, 'NC');
 select * from user_movie;
 
