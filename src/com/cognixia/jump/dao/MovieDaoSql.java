@@ -54,7 +54,7 @@ public class MovieDaoSql implements MovieDao{
 	@Override
 	public Optional<Movie> getMovieById(int id) {
 		
-		try( PreparedStatement pstmt = conn.prepareStatement("select * from movies where dept_id = ?") ) {
+		try( PreparedStatement pstmt = conn.prepareStatement("select * from movies where movie_id = ?") ) {
 			
 			pstmt.setInt(1, id);
 			

@@ -84,8 +84,7 @@ public class UserDaoSql implements UserDao{
 	
 	@Override
 	public boolean updateMovieProgress(User user, int movie_id, String newStatus) {
-		try(PreparedStatement pstmt = conn.prepareStatement("update user_movie set status = ? where user_id = ? and movie_id = ?" 
-				+ "where dept_id = ?");){
+		try(PreparedStatement pstmt = conn.prepareStatement("update user_movie set status = ? where user_id = ? and movie_id = ?");){
 			pstmt.setString(1, newStatus);
 			pstmt.setInt(2, user.getUserId());
 			pstmt.setInt(3, movie_id);
