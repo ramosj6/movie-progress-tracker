@@ -32,10 +32,12 @@ public class MovieTracker {
 			menu();
 		}
 		else {
-			System.out.println("Couldnt't find that user. Please try again.");
-			
+			System.out.println("Couldnt't find that user. You have one more login attempt. Please try again!");
+			// only want to do two attempts -- last attempt
 			if(login()) {
 				menu();
+			} else {
+				System.out.println("Too many login attempts. You are now locked out. Terminating program");
 			}
 		}
 	}
@@ -55,7 +57,6 @@ public class MovieTracker {
 			System.out.print("Password: ");
 			password = sc.next();
 			System.out.println();
-			System.out.println("-------------------------------------------------------------------------------------------");
 			
 			
 			Optional<User> userToFind = userDao.validateUser(username, password);
@@ -63,6 +64,7 @@ public class MovieTracker {
 			// check if the optional has something
 			if(userToFind.isPresent()) {
 				userFound = userToFind.get();
+				System.out.println("-------------------------------------------------------------------------------------------");
 				System.out.println("User login Success! Welcome " + userFound.getFirstName() + "!");
 				trackedList = userDao.getListOfMoviesTracked(userFound);
 				return true;
@@ -112,16 +114,11 @@ public class MovieTracker {
 		}
 			if(option.equals("1")) {
 				addMovieOption(moviesList, firstSelector);
-				
-				// Updates the current list with newly added movie to track
-				System.out.println("Here's your updated list now:\n");
 				getTrackedList();
 			}
 			else if(option.equals("2")) {
 				
 				updateMovieProgress(moviesList, secondSelector);
-				
-				System.out.println("Updated list: \n");
 				getTrackedList();
 			}
 			else if(option.equals("3")) {
@@ -215,10 +212,15 @@ public class MovieTracker {
 			System.out.println("Updating the status of your movie...\n");
 
 			//Updating the status in the database
-			userDao.updateMovieProgress(userFound, selector, updatedStatus);
+			if(userDao.updateMovieProgress(userFound, selector, updatedStatus)) {
+				// Updating the tracked list
+				trackedList = userDao.getListOfMoviesTracked(userFound);
+				
+				System.out.println("Updated list: \n");
+			} else {
+				System.out.println("Could not update the status of your movie");
+			}
 			
-			// Updating the tracked list
-			trackedList = userDao.getListOfMoviesTracked(userFound);
 
 		} catch (InputMismatchException e) {
 			System.out.println("Invalid input. Please enter a valid type.");
@@ -252,11 +254,16 @@ public class MovieTracker {
 			System.out.println("You selected: " + movies.get(selector-1).getTitle());
 			System.out.println("Adding to your tracker...\n");
 			
-			// Adds the movie to the database
-			userDao.addMovieForProgress(userFound, selector);
-			
-			// Updating the tracked list
-			trackedList = userDao.getListOfMoviesTracked(userFound);
+			// If successfully added the movie
+			if (userDao.addMovieForProgress(userFound, selector)) {
+				// Updates the current list with newly added movie to track
+				System.out.println("Here's your updated list now:\n");
+				// Updating the tracked list
+				trackedList = userDao.getListOfMoviesTracked(userFound);
+			} else {
+				System.out.println("Did not add the movie.");
+				System.out.println("Here's your list\n");
+			}
 
 		} catch (InputMismatchException e) {
 			System.out.println("Invalid input. Please enter a valid integer.");
